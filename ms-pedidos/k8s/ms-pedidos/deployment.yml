@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ms-pedidos-deployment
+  namespace: ms-pedidos-namespace
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: ms-pedidos-deployment
+  template:
+    metadata:
+      labels:
+        app: ms-pedidos-deployment
+    spec:
+      containers:
+      - name: ms-pedidos-container
+        image: jesushuaripaucarcardenas/ms-pedidos:1.0
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8082
+        envFrom:
+        - secretRef:
+            name: ms-pedidos-secret

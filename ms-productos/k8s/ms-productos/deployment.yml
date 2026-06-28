@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ms-productos-deployment
+  namespace: ms-productos-namespace
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: ms-productos-deployment
+  template:
+    metadata:
+      labels:
+        app: ms-productos-deployment
+    spec:
+      containers:
+      - name: ms-productos-container
+        image: jesushuaripaucarcardenas/ms-productos:1.0
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8081
+        envFrom:
+        - secretRef:
+            name: ms-productos-secret
